@@ -1,0 +1,361 @@
+﻿<!DOCTYPE html>
+<html ng-app="ResumeApp">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <!-- STYLESHEETS -->
+    <link rel="stylesheet" href="~/Assets/css/bootstrap.min.css" type="text/css" media="all">
+    <link rel="stylesheet" href="~/Assets/css/all.min.css" type="text/css" media="all">
+    <link rel="stylesheet" href="~/Assets/css/simple-line-icons.css" type="text/css" media="all">
+    <link rel="stylesheet" href="~/Assets/css/slick.css" type="text/css" media="all">
+    <link rel="stylesheet" href="~/Assets/css/animate.css" type="text/css" media="all">
+    <link rel="stylesheet" href="~/Assets/css/magnific-popup.css" type="text/css" media="all">
+    <link rel="stylesheet" href="~/Assets/css/style.css" type="text/css" media="all">
+    <link href="~/Assets/css/neumorphism.css" rel="stylesheet" />
+    <script src="~/lib/angularjs/angular.js"></script>
+    <script src="~/lib/angularjs/angular-route.js"></script>
+    
+    <style type="text/css">
+        header.desktop-header-1 {
+            width: 270px !important
+        }
+    </style>
+</head>
+<body ng-controller="ResumeCtlrs">
+    <!-- Preloader -->
+    <div id="preloader" class="light">
+        <div class="outer">
+            <!-- Google Chrome -->
+            <div class="infinityChrome">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+
+            <!-- Safari and others -->
+            <div class="infinity">
+                <div>
+                    <span></span>
+                </div>
+                <div>
+                    <span></span>
+                </div>
+                <div>
+                    <span></span>
+                </div>
+            </div>
+            <!-- Stuff -->
+            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="goo-outer">
+                <defs>
+                    <filter id="goo">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
+                        <feColorMatrix in="blur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+                        <feBlend in="SourceGraphic" in2="goo" />
+                    </filter>
+                </defs>
+            </svg>
+        </div>
+    </div>
+
+    <!-- mobile header -->
+    <header class="mobile-header-1 light">
+        <div class="container">
+            <!-- menu icon -->
+            <div class="menu-icon d-inline-flex mr-4">
+                <button>
+                    <span></span>
+                </button>
+            </div>
+            <!-- logo image -->
+            <div class="site-logo">
+                <a href="index-light.html">
+                    <img src="~/Assets/images/resume.svg" width="100" alt="AC" />
+                </a>
+            </div>
+        </div>
+    </header>
+    <div>
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <!-- desktop header -->
+    <header class="desktop-header-1 light d-flex align-items-start flex-column">
+
+        <!-- logo image -->
+        <div class="site-logo">
+            <a asp-action="Index" asp-controller="resumeBuilder">
+                <img src="~/Assets/images/resume.svg" width="150" alt="AC" />
+            </a>
+
+        </div>
+
+        <!-- main menu -->
+        <nav>
+            <ul class="vertical-menu scrollspy">
+                <li class="active"><a href="#home"><i class="icon-home"></i>Home</a></li>
+                <li><a href="#about"><i class="icon-user-following"></i>About</a></li>
+                <li><a href="#services"><i class="icon-briefcase"></i>Services</a></li>
+                <li><a href="#experience"><i class="icon-graduation"></i>Experience</a></li>
+                <li><a href="#works"><i class="icon-layers"></i>Works</a></li>
+                <li><a href="#blog"><i class="icon-note"></i>Blog</a></li>
+                <li><a href="#contact"><i class="icon-bubbles"></i>Contact</a></li>
+                <li>
+                    <div class="row">
+                        <div class="btn-group mb-2 col-8">
+                            <button type="button" class="btn btn-primary">Action</button>
+                            <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="fas fa-angle-down dropdown-arrow"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <div class="dropdown-menu">
+                                <button type="button" class="btn btn-block btn-primary mb-4" data-toggle="modal" data-target="#modal-form">
+                                    Sign
+                                    In
+                                </button>
+                                <button type="button" class="btn btn-block btn-primary mb-4" data-toggle="modal" data-target="#modal-form-signup">
+                                    Sign
+                                    Up
+                                </button>
+                                <button type="button" class="btn btn-block btn-primary mb-4" data-toggle="modal" data-target="#modal-default">
+                                    Sign Out
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="btn-group mb-2 col-4">
+                            <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="fas fa-angle-down dropdown-arrow"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <div class="dropdown-menu">
+                                <button type="button" onclick="location.href='#!/insertdata'" class="btn btn-block btn-primary mb-2">
+                                    <i class="fas fa-user-tie"></i>Make Resume
+                                </button>
+                                <button onclick="location.href='#!/dataaction'" class="btn btn-block btn-primary mb-2"><i class="fas fa-table "></i>Data Action</button>
+                                <button onclick="location.href='#!/countryadd'" class="btn btn-block btn-primary"><i class="fas fa-flag"></i>Country Add</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <div class="col-md-4">
+        <!-- Modal Content -->
+        <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body p-0">
+                        <div class="card timeline edu bg-white rounded  padding-30 overflow-hidden shadow-soft border-light p-4">
+                            <button type="button" class="close ml-auto" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <div class="card-header text-center pb-0">
+                                <h2 class="section-title wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">Sign in to our platform</h2>
+                                <span>Login here using your username and password</span>
+                            </div>
+                            <div class="card-body">
+                                <form action="#">
+                                    <!-- Form -->
+                                    <div class="form-group">
+                                        <label for="exampleInputIcon3">Your email</label>
+                                        <div class="input-group mb-4">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><span class="fas fa-envelope"></span></span>
+                                            </div>
+                                            <input class="form-control" id="exampleInputIcon3" placeholder="example@company.com" type="text" aria-label="email adress">
+                                        </div>
+                                    </div>
+                                    <!-- End of Form -->
+                                    <div class="form-group">
+                                        <!-- Form -->
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword6">Password</label>
+                                            <div class="input-group mb-4">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><span class="fas fa-unlock-alt"></span></span>
+                                                </div>
+                                                <input class="form-control" id="exampleInputPassword6" placeholder="Password" type="password" aria-label="Password" required="">
+                                            </div>
+                                        </div>
+                                        <!-- End of Form -->
+                                        <div class="d-block d-sm-flex justify-content-between align-items-center mb-4">
+                                            <div class="form-check mb-2 mb-sm-0">
+                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck5">
+                                                <label class="form-check-label" for="defaultCheck5">
+                                                    Remember me
+                                                </label>
+                                            </div>
+                                            <div><a href="#" class="small text-right">Lost password?</a></div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-block btn-primary"><span style="color:darkblue">Sign in</span></button>
+                                </form>
+                                <div class="mt-3 mb-4 text-center">
+                                    <span class="font-weight-normal">or login with</span>
+                                </div>
+                                <div class="btn-wrapper my-4 text-center">
+                                    <button class="btn btn-icon-only btn-pill btn-outline-light text-facebook mr-2" type="button" aria-label="facebook button" title="facebook button">
+                                        <span aria-hidden="true" class="fab fa-facebook-f"></span>
+                                    </button>
+                                    <button class="btn btn-icon-only btn-pill btn-outline-light text-twitter mr-2" type="button" aria-label="twitter button" title="twitter button">
+                                        <span aria-hidden="true" class="fab fa-twitter"></span>
+                                    </button>
+                                    <button class="btn btn-icon-only btn-pill btn-outline-light text-facebook" type="button" aria-label="github button" title="github button">
+                                        <span aria-hidden="true" class="fab fa-github"></span>
+                                    </button>
+                                </div>
+                                <div class="d-block d-sm-flex justify-content-center align-items-center mt-4">
+                                    <span class="font-weight-normal">
+                                        Not registered?
+                                        <a href="#" data-toggle="modal" data-target="#modal-form-signup" data-dismiss="modal" class="font-weight-bold">Create account</a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of Modal Content -->
+    </div>
+    <div class="col-md-4">
+        <div class="modal fade" id="modal-form-signup" tabindex="-1" role="dialog" aria-labelledby="modal-form-signup" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body p-0">
+                        <div class="card timeline edu bg-white rounded padding-30 overflow-hidden shadow-soft border-light p-4">
+                            <button type="button" class="close ml-auto" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <div class="card-header text-center pb-0">
+                                <h2 class="section-title wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">Create Account</h2>
+                            </div>
+                            <div class="card-body">
+                                <form action="#">
+                                    <!-- Form -->
+                                    <div class="form-group">
+                                        <label for="exampleInputIcon4">Your email</label>
+                                        <div class="input-group mb-4">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><span class="fas fa-envelope"></span></span>
+                                            </div>
+                                            <input class="form-control" id="exampleInputIcon4" placeholder="example@company.com" type="text" aria-label="email adress">
+                                        </div>
+                                    </div>
+                                    <!-- End of Form -->
+                                    <div class="form-group">
+                                        <!-- Form -->
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword7">Password</label>
+                                            <div class="input-group mb-4">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><span class="fas fa-unlock-alt"></span></span>
+                                                </div>
+                                                <input class="form-control" id="exampleInputPassword7" placeholder="Password" type="password" aria-label="Password" required="">
+                                            </div>
+                                        </div>
+                                        <!-- End of Form -->
+                                        <!-- Form -->
+                                        <div class="form-group">
+                                            <label for="exampleConfirmPassword7">Confirm Password</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><span class="fas fa-unlock-alt"></span></span>
+                                                </div>
+                                                <input class="form-control" id="exampleConfirmPassword7" placeholder="Confirm password" type="password" aria-label="Password" required="">
+                                            </div>
+                                        </div>
+                                        <!-- End of Form -->
+                                        <div class="form-check mb-4">
+                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck6">
+                                            <label class="form-check-label" for="defaultCheck6">
+                                                I agree to the <a href="#">terms and conditions</a>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-block btn-primary"><span style="color:darkblue">Sign Up</span></button>
+                                </form>
+                                <div class="mt-3 mb-4 text-center">
+                                    <span class="font-weight-normal">or</span>
+                                </div>
+                                <div class="btn-wrapper my-4 text-center">
+                                    <button class="btn btn-default btn-icon-only btn-pill btn-outline-light text-facebook mr-2" type="button" aria-label="facebook button" title="facebook button">
+                                        <span aria-hidden="true" class="fab fa-facebook-f"></span>
+                                    </button>
+                                    <button class="btn btn-icon-only btn-pill btn-outline-light text-twitter mr-2" type="button" aria-label="twitter button" title="twitter button">
+                                        <span aria-hidden="true" class="fab fa-twitter"></span>
+                                    </button>
+                                    <button class="btn btn-icon-only btn-pill btn-outline-light text-facebook" type="button" aria-label="github button" title="github button">
+                                        <span aria-hidden="true" class="fab fa-github"></span>
+                                    </button>
+                                </div>
+                                <div class="d-block d-sm-flex justify-content-center align-items-center mt-4">
+                                    <span class="font-weight-normal">
+                                        Already have an account?
+                                        <a href="#" class="font-weight-bold">Login here</a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of Modal Content -->
+    </div>
+    <div class="col-md-4">
+        <div class="modal fade" id="modal-default" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 style="color:darkblue;font-weight:bold" class="display-4 h6 modal-title mb-0" id="modal-title-default">Are you want to Sign Out</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>With less than a month to go before the European Union enacts new consumer privacy laws for its citizens, companies around the world are updating their terms of service agreements to comply.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-primary">OK</button>
+                        <button type="button" class="btn btn-primary text-danger ml-auto" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of Modal Content -->
+    </div>
+
+    <footer class="border-top footer text-muted shadow-sm">
+        <div class="container" style="color:white">
+            <p style="margin-left: 300px;">&copy; @DateTime.Now.Year -ResumeMaker- www.resume-maker.com <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></p>
+        </div>
+    </footer>
+    <!-- Go to top button -->
+    <a href="javascript:" id="return-to-top"><i class="fas fa-arrow-up"></i></a>
+
+    <!-- SCRIPTS -->
+    <script src="~/Assets/js/jquery-1.12.3.min.js"></script>
+    <script src="~/Assets/js/jquery.easing.min.js"></script>
+    <script src="~/Assets/js/jquery.waypoints.min.js"></script>
+    <script src="~/Assets/js/jquery.counterup.min.js"></script>
+    <script src="~/Assets/js/popper.min.js"></script>
+    <script src="~/Assets/js/bootstrap.min.js"></script>
+    <script src="~/Assets/js/isotope.pkgd.min.js"></script>
+    <script src="~/Assets/js/infinite-scroll.min.js"></script>
+    <script src="~/Assets/js/imagesloaded.pkgd.min.js"></script>
+    <script src="~/Assets/js/slick.min.js"></script>
+    <script src="~/Assets/js/contact.js"></script>
+    <script src="~/Assets/js/validator.js"></script>
+    <script src="~/Assets/js/wow.min.js"></script>
+    <script src="~/Assets/js/morphext.min.js"></script>
+    <script src="~/Assets/js/parallax.min.js"></script>
+    <script src="~/Assets/js/jquery.magnific-popup.min.js"></script>
+    <script src="~/Assets/js/custom.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,192 @@
+﻿@*@{
+    ViewData["Title"] = "Home Page";
+}*@
+<div>
+    <ng-view></ng-view>
+</div>
+
+<script type="text/javascript">
+    angular.module("ResumeApp", ['ngRoute'])
+        //dependency injection
+        .constant('ResumeUrl', "http://localhost:31980/api/")
+        .config(function ($routeProvider) {
+            $routeProvider
+                .when("/", {
+                    templateUrl: "/Template/home.html"
+                })
+                .when("/home", {
+                    templateUrl: "/Template/home.html"
+                })
+                .when("/insertdata", {
+                    templateUrl: "/Template/insertdata.html"
+                })
+                .when("/countryadd", {
+                    templateUrl: "/Template/countryadd.html",
+                    controller: "countryCtrl",
+                })
+                .when("/dataaction", {
+                    templateUrl: "/Template/resumeAllview.html"
+                })
+                .when("/editType/:id", {
+                    templateUrl: "/Template/editType.html"
+                })
+                .when("/resumeEdit/:id", {
+                    templateUrl: "/Template/resumeEdit.html"
+                })
+                .when("/resumeView/:id", {
+                    templateUrl: "/Template/resumeView.html"
+                })
+                .otherwise("/")
+        })
+        .controller("ResumeCtlrs", function ($scope, $http, ResumeUrl) {
+            $scope.model = {};
+            $scope.typeObject = {};
+            $scope.apiMessage = "";
+        })
+        .controller("countryCtrl", function ($scope, $http, ResumeUrl, apiService, $location) {
+
+            apiService.get(`${ResumeUrl}Countries`)
+                .then(function (response) {
+                    $scope.model.country = response.data;
+                })
+            //for create
+            $scope.createCountry = function(f) {
+                console.log(f);
+                apiService.post(`${ResumeUrl}Countries`, $scope.typeObject)
+                    .then(function(r) {
+                        $scope.model.types.push(r.data);
+                        $scope.typeObject = null;
+                        $scope.apiMessage = "Data inserted successfully!!";
+                        f.$setPristine();
+                        f.$setUntouched();
+                    }, err => {
+                        $scope.apiMessage = "Data insert failed!!";
+                    });
+            }
+            //for edit
+            $scope.editType = function(t) {
+                angular.copy(t, $scope.typeObject);
+                console.log($scope.typeObject);
+                $location.path("/editType/:" + t.countryId);
+            }
+            //for update
+            $scope.updateCountry = function(f) {
+                apiService.put(`${ResumeUrl}Countries/${$scope.typeObject.countryId}`, $scope.typeObject)
+                    .then(r => {
+                        var i = $scope.model.types.findIndex(t => t.countryId == $scope.typeObject.countryId);
+                        angular.copy($scope.typeObject, $scope.model.types[i]);
+                        console.log($scope.model.types[i]);
+                        $scope.apiMessage = "Data Updated successfully!!";
+                        f.$setPristine();
+                        f.$setUntouched();
+                    }, err => {
+                        $scope.apiMessage = "Data update failed!!";
+                    });
+            }
+            //for Modal show
+            $scope.delModal = null;
+            $scope.confirmDelete = function(t) {
+                $scope.delModal = new bootstrap.Modal(document.getElementById('delModal'), {});
+                $scope.typeObject = t;
+                $scope.delModal.show();
+                
+            }
+            //for Delete data
+            $scope.doDeleteType = function() {
+                apiService.delete(`${ResumeUrl}Countries/`, $scope.typeObject.countryId)
+                    .then(function(r) {
+                        var i = $scope.model.types.findIndex(t => t.countryId == $scope.typeObject.countryId);
+                        $scope.model.types.splice(i, 1);
+                        $scope.apiMessage = "Data Deleted!!";
+                        window.location.reload();
+                        
+                    },
+                        err => {
+                            $scope.apiMessage = "Data delete failed!!";
+                        })
+                    .finally(function() {
+                        $scope.delModal.hide();
+                    })
+            }
+        })
+        .controller("resumeCtrl", function ($scope, $http, ResumeUrl, apiService, $location) {
+            apiService.get(`${ResumeUrl}ResumeMakers`)
+                .then(function (r) {
+                    $scope.model.resume = r.data;
+                    console.log(r.data);
+                })
+            //for Modal show
+            $scope.delModal = null;
+            $scope.confirmDelete = function (t) {
+                $scope.delModal = new bootstrap.Modal(document.getElementById('delModal'), {});
+                $scope.typeObject = t;
+                $scope.delModal.show();
+            }
+            //for Delete data
+            $scope.doDeleteType = function () {
+                apiService.delete(`${ResumeUrl}ResumeMakers/`, $scope.typeObject.resumeMakerId)
+                    .then(function (r) {
+                        var i = $scope.model.types.findIndex(t => t.resumeMakerId == $scope.typeObject.resumeMakerId);
+                        $scope.model.types.splice(i, 1);
+                        $scope.apiMessage = "Data Deleted!!";
+                    },
+                        err => {
+                            $scope.apiMessage = "Data delete failed!!";
+                        })
+                    .finally(function () {
+                        $scope.delModal.hide();
+                    })
+            }
+            //for create
+            $scope.createResume = function (f) {
+                console.log(f);
+                apiService.post(`${ResumeUrl}ResumeMakers`, $scope.typeObject)
+                    .then(function (r) {
+                        $scope.model.types.push(r.data);
+                        $scope.typeObject = {};
+                        $scope.apiMessage = "Data inserted successfully!!";
+                        f.$setPristine();
+                        f.$setUntouched();
+                    }, err => {
+                        $scope.apiMessage = "Data insert failed!!";
+                    });
+            }
+            //for edit
+            $scope.editType = function (t) {
+                angular.copy(t, $scope.typeObject);
+                console.log($scope.typeObject);
+                $location.path("/resumeEdit/:" + t.resumeMakerId);
+            }
+            //for update
+            $scope.updateResume = function (f) {
+                apiService.put(`${ResumeUrl}ResumeMakers/${$scope.typeObject.resumeMakerId}`, $scope.typeObject)
+                    .then(r => {
+                        var i = $scope.model.types.findIndex(t => t.resumeMakerId == $scope.typeObject.resumeMakerId);
+                        angular.copy($scope.typeObject, $scope.model.types[i]);
+                        console.log($scope.model.types[i]);
+                        $scope.apiMessage = "Data Updated successfully!!";
+                        f.$setPristine();
+                        f.$setUntouched();
+                    }, err => {
+                        $scope.apiMessage = "Data update failed!!";
+                    });
+            }
+            //resume full view
+            $scope.resumeViews = function (t) {
+                angular.copy(t, $scope.typeObject);
+                console.log($scope.typeObject);
+                $location.path("/resumeView/:" + t.resumeMakerId);
+            }
+            $scope.SelectFile = function (e) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $scope.PreviewImage = e.target.result;
+                    $scope.$apply();
+                };
+
+                reader.readAsDataURL(e.target.files[0]);
+            };
+        })
+
+</script>
+<script src="~/app/services/apiService.js"></script>
